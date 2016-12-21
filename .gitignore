@@ -21,3 +21,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### Front-end ###
+node_modules
+**/bootstrap

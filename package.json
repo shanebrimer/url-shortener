@@ -1,0 +1,22 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "description": "Simple web app that shortens URLs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shanebrimer/url-shortener.git"
+  },
+  "author": "Shane Brimer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shanebrimer/url-shortener/issues"
+  },
+  "homepage": "https://github.com/shanebrimer/url-shortener#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
