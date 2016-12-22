@@ -10,12 +10,11 @@ import com.google.common.hash.Hashing;
 @Service
 public class EncoderService {
 
-    // private static final String ALPHABET =
-    // "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
-    // private static final int maxLength = 6;
+    private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    private static final int maxLength = 6;
 
-    private static final String ALPHABET = "01";
-    private static final int maxLength = 2;
+    // private static final String ALPHABET = "01";
+    // private static final int maxLength = 2;
 
     public BigInteger getHashedInt(String original) {
         byte[] hashed = Hashing.sha256().hashString(original, StandardCharsets.UTF_8).asBytes();
