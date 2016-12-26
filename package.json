@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/shanebrimer/url-shortener#readme",
   "dependencies": {
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "handlebars": "^4.0.6"
   }
 }

@@ -48,4 +48,9 @@ public class UrlMappingController {
         return urlMappingService.getUrlMapping(shortUrl);
     }
 
+    @RequestMapping(value = "/{shortUrl}", method = RequestMethod.DELETE)
+    public void deleteUrlmapping(@PathVariable String shortUrl) {
+        urlMappingService.deleteUrlMapping(shortUrl);
+    }
+
 }

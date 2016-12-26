@@ -58,6 +58,10 @@ public class UrlMappingService {
         throw new EntityIdConflictException("shortUrl already in use");
     }
 
+    public void deleteUrlMapping(String shortUrl) {
+        urlMappingRepository.delete(shortUrl);
+    }
+
     private boolean saveUrlMapping(UrlMapping urlMapping) {
         boolean success = false;
         if (urlMappingRepository.exists(urlMapping.getShortUrl())) {

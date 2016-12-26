@@ -25,3 +25,4 @@ nbdist/
 ### Front-end ###
 node_modules
 **/bootstrap
+vendor/

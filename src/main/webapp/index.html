@@ -12,7 +12,7 @@
     <title>URL Shortener</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="css/dashboard.css" rel="stylesheet">
@@ -73,22 +73,8 @@
             <li><a href="">Another nav item</a></li>
           </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">URLs</h1>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Short URL</th>
-                  <th>Redirect URL</th>
-                </tr>
-              </thead>
-              <tbody>
-
-              </tbody>
-            </table>
-          </div>
+        <div id="table-container" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          
         </div>
       </div>
     </div>
@@ -97,19 +83,33 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/handlebars/handlebars.runtime.min.js"></script>
+    <script src="js/compiledTemplates.js"></script>
 
     <script type="text/javascript">
       
       $.get("/api/urlMappings", function(data, status) {
-        for (i = 0; i < data.length; i++) {
-          $("tbody").append("<tr><td>" + i + "</td><td>" + data[i].shortUrl + "</td><td>" + data[i].redirectUrl + "</td><td><button id=\"deleteBtn\" type=\"button\" class=\"btn btn-danger\"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete</button></td></tr>");
-        }
+        var context = {
+          urlMappings: data
+        };
+        console.log(JSON.stringify(context));
+        var templateScript = Handlebars.templates.urlMappingInfoTable(context);
+        $("#table-container").append(templateScript);
       });
 
       $(document).ready(function() {
         $("tbody").on("click", "#deleteBtn", function() {
-          $(this).parent().parent().remove();
+          $.ajax({
+            url: "/api/urlMappings/",
+            type: 'DELETE',
+            success: function(result) {
+              $(this).parent().parent().remove();
+            },
+            error: function(result){
+              $(this).parent().parent().remove();
+            }
+          });
         });
       });
     

@@ -1,0 +1,26 @@
+<h1 class="page-header">URLs</h1>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Short URL</th>
+        <th>Redirect URL</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each urlMappings}}
+        <tr>
+          <td>{{@index}}</td>
+          <td><a href="http://localhost:8080/a/{{shortUrl}}">{{shortUrl}}</a></td>
+          <td><a href="{{redirectUrl}}">{{redirectUrl}}</a></td>
+          <td>
+            <button id="deleteBtn" type="button" class="btn btn-danger">
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+            </button>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
