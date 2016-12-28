@@ -10,12 +10,12 @@
     </thead>
     <tbody>
       {{#each urlMappings}}
-        <tr>
+        <tr data-shorturl="{{shortUrl}}">
           <td>{{@index}}</td>
           <td><a href="http://localhost:8080/a/{{shortUrl}}">{{shortUrl}}</a></td>
           <td><a href="{{redirectUrl}}">{{redirectUrl}}</a></td>
           <td>
-            <button id="deleteBtn" type="button" class="btn btn-danger">
+            <button type="button" class="btn btn-danger" data-shorturl="{{shortUrl}}">
               <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
             </button>
           </td>

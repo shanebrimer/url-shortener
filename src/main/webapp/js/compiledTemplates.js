@@ -1,18 +1,11 @@
 (function() {
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
-templates['test'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
-
-  return "I am learning "
-    + alias4(((helper = (helper = helpers.language || (depth0 != null ? depth0.language : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"language","hash":{},"data":data}) : helper)))
-    + ". It is "
-    + alias4(((helper = (helper = helpers.adjective || (depth0 != null ? depth0.adjective : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"adjective","hash":{},"data":data}) : helper)))
-    + ".";
-},"useData":true});
 templates['urlMappingInfoTable'] = template({"1":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "        <tr>\n          <td>"
+  return "        <tr data-shorturl=\""
+    + alias4(((helper = (helper = helpers.shortUrl || (depth0 != null ? depth0.shortUrl : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"shortUrl","hash":{},"data":data}) : helper)))
+    + "\">\n          <td>"
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "</td>\n          <td><a href=\"http://localhost:8080/a/"
     + alias4(((helper = (helper = helpers.shortUrl || (depth0 != null ? depth0.shortUrl : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"shortUrl","hash":{},"data":data}) : helper)))
@@ -22,7 +15,9 @@ templates['urlMappingInfoTable'] = template({"1":function(container,depth0,helpe
     + alias4(((helper = (helper = helpers.redirectUrl || (depth0 != null ? depth0.redirectUrl : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"redirectUrl","hash":{},"data":data}) : helper)))
     + "\">"
     + alias4(((helper = (helper = helpers.redirectUrl || (depth0 != null ? depth0.redirectUrl : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"redirectUrl","hash":{},"data":data}) : helper)))
-    + "</a></td>\n          <td>\n            <button id=\"deleteBtn\" type=\"button\" class=\"btn btn-danger\">\n              <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete\n            </button>\n          </td>\n        </tr>\n";
+    + "</a></td>\n          <td>\n            <button type=\"button\" class=\"btn btn-danger\" data-shorturl=\""
+    + alias4(((helper = (helper = helpers.shortUrl || (depth0 != null ? depth0.shortUrl : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"shortUrl","hash":{},"data":data}) : helper)))
+    + "\">\n              <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete\n            </button>\n          </td>\n        </tr>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
