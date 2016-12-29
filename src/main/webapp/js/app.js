@@ -23,27 +23,52 @@ var client = (function () {
 
 })();
 
+var urlTable = (function () {
+
+  var table;
+
+  var load = function () {
+    client.getUrlMappings().done(function (data) {
+      var tableTemplate = Handlebars.templates.urlMappingInfoTable(data);
+      $("#url-table").append(tableTemplate);
+      table = $("#url-table").DataTable();
+    });
+  };
+
+  var deleteRow = function (rowElement) {
+    var shortUrl = $(rowElement).data("shorturl");
+    client.deleteUrlMapping(shortUrl).done(function () {
+      // client.print(shortUrl + " was deleted...maybe");
+    }).fail(function () {
+      // client.print(shortUrl + " could not be deleted...probably");
+    }).always(function () {
+      table.row($(rowElement)).remove().draw();
+    });
+  };
+
+  return {
+    load: load,
+    deleteRow: deleteRow
+  };
+
+})();
+
 $(document).ready(function () {
-  client.getUrlMappings().done(function (data) {
-    var context = {
-      urlMappings: data
-    };
-    console.log(JSON.stringify(context));
-    var templateScript = Handlebars.templates.urlMappingInfoTable(context);
-    $("#table-container").append(templateScript);
+  urlTable.load();
+});
+
+
+$(document).ready(function() {
+  $("#confirm-delete-modal").on("show.bs.modal", function(e) {
+    var rowElement = $(e.relatedTarget).parents("tr");
+    $("#confirm-delete-btn").data("rowElement", rowElement);
   });
 });
 
 $(document).ready(function() {
-  $("#table-container").on("click", "button", function() {
-    var shortUrl = $(this).data("shorturl");
-    client.deleteUrlMapping(shortUrl).done(function () {
-      client.print(shortUrl + " was deleted");
-    }).fail(function () {
-      client.print(shortUrl + " could not be deleted");
-    });
-
-    $(this).parent().parent().remove();
+  $("#confirm-delete-btn").on("click", function() {
+    var rowElement = $(this).data("rowElement");
+    urlTable.deleteRow(rowElement);
   });
 });
 
