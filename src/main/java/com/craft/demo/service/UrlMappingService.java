@@ -42,7 +42,6 @@ public class UrlMappingService {
     }
 
     public UrlMapping generateUrlMapping(String redirectUrl) {
-        log.info("a:{},b:{},c:{}", alphabet, maxLength, maxRetryAttempts);
         for (int i = 0; i < maxRetryAttempts; i++) {
             String shortUrl = encoderService.getRandomEncodedString(alphabet, maxLength);
             UrlMapping urlMapping = new UrlMapping(shortUrl, redirectUrl);
