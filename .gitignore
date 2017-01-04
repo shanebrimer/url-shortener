@@ -26,3 +26,4 @@ nbdist/
 node_modules
 **/bootstrap
 vendor/
+compiled-templates.js
