@@ -1,14 +1,16 @@
 package com.craft.demo.service;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.craft.demo.exception.EntityIdConflictException;
+import com.craft.demo.exception.ResourceNotFoundException;
 import com.craft.demo.model.UrlMapping;
 import com.craft.demo.repository.UrlMappingRepository;
 
@@ -22,6 +24,15 @@ public class UrlMappingService {
     @Autowired
     private UrlMappingRepository urlMappingRepository;
 
+    @Value("${url.encoding.alphabet}")
+    private String alphabet;
+
+    @Value("${url.encoding.maxLength}")
+    private int maxLength;
+
+    @Value("${url.generator.maxRetryAttempts}")
+    private int maxRetryAttempts;
+
     public List<UrlMapping> getAllUrlMappings() {
         return (List<UrlMapping>) urlMappingRepository.findAll();
     }
@@ -31,20 +42,14 @@ public class UrlMappingService {
     }
 
     public UrlMapping generateUrlMapping(String redirectUrl) {
-        BigInteger retryCount = BigInteger.ZERO;
-        BigInteger timesToRetry = encoderService.getLargestRepresentableValue();
-        BigInteger hashedInt = encoderService.getHashedInt(redirectUrl);
-
-        while (retryCount.compareTo(timesToRetry) < 0) {
-            log.info(retryCount.toString());
-            String shortUrl = encoderService.encode(hashedInt.add(retryCount));
+        log.info("a:{},b:{},c:{}", alphabet, maxLength, maxRetryAttempts);
+        for (int i = 0; i < maxRetryAttempts; i++) {
+            String shortUrl = encoderService.getRandomEncodedString(alphabet, maxLength);
             UrlMapping urlMapping = new UrlMapping(shortUrl, redirectUrl);
 
             if (saveUrlMapping(urlMapping)) {
                 return urlMapping;
             }
-
-            retryCount = retryCount.add(BigInteger.ONE);
         }
 
         throw new EntityIdConflictException("failed to generate a shortUrl not already in use");
@@ -59,7 +64,11 @@ public class UrlMappingService {
     }
 
     public void deleteUrlMapping(String shortUrl) {
-        urlMappingRepository.delete(shortUrl);
+        try {
+            urlMappingRepository.delete(shortUrl);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException();
+        }
     }
 
     private boolean saveUrlMapping(UrlMapping urlMapping) {
